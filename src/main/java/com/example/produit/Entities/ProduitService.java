@@ -1,17 +1,19 @@
 package com.example.produit.Entities;
 
+import com.example.produit.Dto.ProduitDto;
 import org.apache.catalina.LifecycleState;
 
 import java.util.List;
 
 public interface ProduitService {
 
-    Produit saveProduit(Produit p);
-    Produit UpdateProduit(Produit p);
+    ProduitDto saveProduit(Produit p);
+    ProduitDto UpdateProduit(Produit p);
     void DeleteProduit(Produit p);
     void DeleteProduitById(Long id);
-    Produit getProduit(Long id);
-    List<Produit>getAllProduits();
+    ProduitDto getProduit(Long id);
+    List<ProduitDto>getAllProduits();
+    ProduitDto convertEntityToDto(Produit p);
 
 
 }
