@@ -14,16 +14,25 @@ public class Categorie {
     private String nomCat;
     private String descriptionCat;
 
+    @OneToMany(mappedBy = "categorie")
+    private List<Produit>produits;
+
+
+    /*
     public List<Produit> getProduits() {
         return produits;
     }
 
+     */
+
+    /*
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }
 
-    @OneToMany(mappedBy = "categorie")
-    private List<Produit>produits;
+     */
+
+
 
 
     public Categorie() {

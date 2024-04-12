@@ -24,11 +24,11 @@ public class ProduitRestController {
     }
 
     @PostMapping("/AjoutProduit")
-    public ProduitDto AddProduit(Produit p){
+    public ProduitDto AddProduit(ProduitDto p){
        return produitImpelementation.saveProduit(p);
     }
     @PostMapping("UpdateProduit")
-    public ProduitDto UpdateProduit(Produit produit){
+    public ProduitDto UpdateProduit(ProduitDto produit){
         return produitImpelementation.UpdateProduit(produit);
     }
 

@@ -4,9 +4,13 @@ import com.example.produit.Dto.ProduitDto;
 import com.example.produit.Entities.Produit;
 import com.example.produit.Entities.ProduitService;
 import com.example.produit.Repository.IProduitRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,15 +19,17 @@ public class ProduitImpelementation implements ProduitService {
 
     @Autowired
     IProduitRepository iProduitRepository;
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
-    public ProduitDto saveProduit(Produit p) {
-        return convertEntityToDto(iProduitRepository.save(p))  ;
+    public ProduitDto saveProduit(ProduitDto p) {
+        return convertEntityToDto(iProduitRepository.save(convertDtoToEntity(p)))  ;
     }
 
     @Override
-    public ProduitDto UpdateProduit(Produit p) {
-        return convertEntityToDto(iProduitRepository.save(p)) ;
+    public ProduitDto UpdateProduit(ProduitDto p) {
+        return convertEntityToDto(iProduitRepository.save(convertDtoToEntity(p))) ;
     }
 
     @Override
@@ -46,16 +52,23 @@ public class ProduitImpelementation implements ProduitService {
         return iProduitRepository.findAll().stream()
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
+
+
+
     }
 
     @Override
     public ProduitDto convertEntityToDto(Produit p) {
 
-        return ProduitDto.builder()
-                .idProduit(p.getIdProduit())
-                .nomProduit(p.getNomProduit())
-                .dateCreation(p.getDateCreation())
-                .prixProduit(p.getPrixProduit())
-                .build();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        ProduitDto produitDto=modelMapper.map(p,ProduitDto.class);
+        return produitDto;
+    }
+
+    public Produit convertDtoToEntity(ProduitDto produitDto){
+        Produit produit =modelMapper.map(produitDto,Produit.class);
+
+
+     return produit;
     }
 }
